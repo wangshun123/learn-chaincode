@@ -37,22 +37,10 @@ func main() {
     }
 }
 // Init resets all the things
-func (s *SmartContract) init(APIstub shim.ChaincodeStubInterface) sc.Response {
-	coupons := []Coupon{
-		Coupon{Number: "001", Amount: "100", Flag: "0", Owner: "hanshuang"},
-	}
-
-	i := 0
-	for i < len(coupons) {
-		fmt.Println("i is ", i)
-		couponAsBytes, _ := json.Marshal(coupons[i])
-		APIstub.PutState("COUPON"+strconv.Itoa(i), couponAsBytes)
-		fmt.Println("Added", coupons[i])
-		i = i + 1
-	}
-
+func (s *SmartContract) Init(APIstub shim.ChaincodeStubInterface) sc.Response {
 	return shim.Success(nil)
 }
+
 // Invoke is our entry point to invoke a chaincode function
 func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 	fmt.Println("invoke is running " + function)
