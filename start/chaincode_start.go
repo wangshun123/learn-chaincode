@@ -28,6 +28,7 @@ import (
 type Coupon struct {
 	Amount string `json:"amount"`
 	Owner  string `json:"owner"`
+	Flag string `json:"flag"`
 }
 // SimpleChaincode example simple Chaincode implementation
 type SimpleChaincode struct {
@@ -70,12 +71,12 @@ func (t *SimpleChaincode) write(stub shim.ChaincodeStubInterface, args []string)
 	var err error
 	fmt.Println("running write()")
 
-	if len(args) != 3 {
-		return nil, errors.New("Incorrect number of arguments. Expecting 3. name of the key and value to set")
+	if len(args) != 4 {
+		return nil, errors.New("Incorrect number of arguments. Expecting 4. name of the key and value to set")
 	}
 
 	key = args[0]                            //rename for fun
-	var coupon = Coupon{Amount: args[1], Owner: args[2]}
+	var coupon = Coupon{Amount: args[1], Owner: args[2],Flag: args[3]}
 	couponAsBytes, _ := json.Marshal(coupon)
 	err = stub.PutState(key,couponAsBytes)  //write the variable into the chaincode state
 	if err != nil {
