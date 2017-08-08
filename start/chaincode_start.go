@@ -115,7 +115,7 @@ func (t *SimpleChaincode) consume(stub shim.ChaincodeStubInterface, args []strin
 	coupon := Coupon{}
 
 	json.Unmarshal(couponAsBytes, &coupon)
-	coupon.Flag = "1"
+	coupon.Flag = args[1]
 
 	couponAsBytes, _ = json.Marshal(coupon)
 	stub.PutState(args[0], couponAsBytes)
