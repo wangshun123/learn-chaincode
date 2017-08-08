@@ -111,6 +111,9 @@ func (t *SimpleChaincode) consume(stub shim.ChaincodeStubInterface, args []strin
 	
 	
 	fmt.Println("running write()")
+	if len(args) != 2 {
+		return nil, errors.New("Incorrect number of arguments. Expecting 2. name of the key and value to set")
+	}
 	couponAsBytes, _ := stub.GetState(args[0])
 	coupon := Coupon{}
 
