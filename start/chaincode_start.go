@@ -63,7 +63,9 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
         return t.write(stub, args)
     }else if function == "change" {
         return t.change(stub, args)
-    }
+    }else if function == "consume" {
+        return t.change(stub, args)
+}
     fmt.Println("invoke did not find func: " + function)
 
     return nil, errors.New("Received unknown function invocation: " + function)
@@ -100,6 +102,20 @@ func (t *SimpleChaincode) change(stub shim.ChaincodeStubInterface, args []string
 
 	json.Unmarshal(couponAsBytes, &coupon)
 	coupon.Owner = args[1]
+
+	couponAsBytes, _ = json.Marshal(coupon)
+	stub.PutState(args[0], couponAsBytes)
+	return nil, nil
+}
+func (t *SimpleChaincode) consume(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+	
+	
+	fmt.Println("running write()")
+	couponAsBytes, _ := stub.GetState(args[0])
+	coupon := Coupon{}
+
+	json.Unmarshal(couponAsBytes, &coupon)
+	coupon.Flag = "1"
 
 	couponAsBytes, _ = json.Marshal(coupon)
 	stub.PutState(args[0], couponAsBytes)
