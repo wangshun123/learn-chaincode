@@ -101,7 +101,7 @@ func (t *SimpleChaincode) change(stub shim.ChaincodeStubInterface, args []string
 	json.Unmarshal(couponAsBytes, &coupon)
 	coupon.Owner = args[1]
 
-	carAsBytes, _ = json.Marshal(coupon)
+	couponAsBytes, _ = json.Marshal(coupon)
 	stub.PutState(args[0], couponAsBytes)
 	return nil, nil
 }
