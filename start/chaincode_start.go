@@ -19,8 +19,11 @@ package main
 import (
 	"errors"
 	"fmt"
-
+         "encoding/json"
+	"strconv"//字符转换包
+	"bytes"  
 	"github.com/hyperledger/fabric/core/chaincode/shim"
+	
 )
 
 // SimpleChaincode example simple Chaincode implementation
