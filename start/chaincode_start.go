@@ -61,6 +61,8 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
         return t.Init(stub, "init", args)
     } else if function == "write" {
         return t.write(stub, args)
+    }else if function == "change" {
+        return t.change(stub, args)
     }
     fmt.Println("invoke did not find func: " + function)
 
@@ -82,6 +84,25 @@ func (t *SimpleChaincode) write(stub shim.ChaincodeStubInterface, args []string)
 	if err != nil {
 		return nil, err
 	}
+	return nil, nil
+}
+func (t *SimpleChaincode) change(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+	var key string
+	var err error
+	fmt.Println("running write()")
+
+	if len(args) != 2 {
+		return nil, errors.New("Incorrect number of arguments. Expecting 2. name of the key and value to set")
+	}
+
+	couponAsBytes, _ := APIstub.GetState(args[0])
+	coupon := Coupon{}
+
+	json.Unmarshal(couponAsBytes, &coupon)
+	coupon.Owner = args[1]
+
+	carAsBytes, _ = json.Marshal(coupon)
+	APIstub.PutState(args[0], couponAsBytes)
 	return nil, nil
 }
 
