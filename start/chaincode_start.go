@@ -95,14 +95,14 @@ func (t *SimpleChaincode) change(stub shim.ChaincodeStubInterface, args []string
 		return nil, errors.New("Incorrect number of arguments. Expecting 2. name of the key and value to set")
 	}
 
-	couponAsBytes, _ := APIstub.GetState(args[0])
+	couponAsBytes, _ := stub.GetState(args[0])
 	coupon := Coupon{}
 
 	json.Unmarshal(couponAsBytes, &coupon)
 	coupon.Owner = args[1]
 
 	carAsBytes, _ = json.Marshal(coupon)
-	APIstub.PutState(args[0], couponAsBytes)
+	stub.PutState(args[0], couponAsBytes)
 	return nil, nil
 }
 
