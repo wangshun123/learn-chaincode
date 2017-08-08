@@ -88,7 +88,7 @@ func (t *SimpleChaincode) write(stub shim.ChaincodeStubInterface, args []string)
 }
 func (t *SimpleChaincode) change(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	var key string
-	var err error
+	
 	fmt.Println("running write()")
 
 	if len(args) != 2 {
