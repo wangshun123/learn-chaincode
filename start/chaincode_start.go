@@ -60,17 +60,18 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
     return nil, errors.New("Received unknown function invocation: " + function)
 }
 func (t *SimpleChaincode) write(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
-	var key, value string
+	var key, amount,owner string
 	var err error
 	fmt.Println("running write()")
 
-	if len(args) != 2 {
-		return nil, errors.New("Incorrect number of arguments. Expecting 2. name of the key and value to set")
+	if len(args) != 3 {
+		return nil, errors.New("Incorrect number of arguments. Expecting 3. name of the key and value to set")
 	}
 
 	key = args[0]                            //rename for fun
-	value = args[1]
-	err = stub.PutState(key, []byte(value))  //write the variable into the chaincode state
+	var coupon = Coupon{number: args[1], owner: args[2]}
+	couponAsBytes, _ := json.Marshal(coupon)
+	err = stub.PutState(key,couponAsBytes)  //write the variable into the chaincode state
 	if err != nil {
 		return nil, err
 	}
