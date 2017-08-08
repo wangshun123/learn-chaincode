@@ -21,7 +21,7 @@ import (
 	"fmt"
          "encoding/json"
 	"strconv"//字符转换包
-	"bytes"  
+	
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 	
 )
