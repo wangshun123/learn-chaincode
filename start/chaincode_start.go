@@ -26,7 +26,7 @@ import (
 	
 )
 type Coupon struct {
-	Number   string `json:"number"`
+	Amount string `json:"amount"`
 	Owner  string `json:"owner"`
 }
 // SimpleChaincode example simple Chaincode implementation
@@ -75,7 +75,7 @@ func (t *SimpleChaincode) write(stub shim.ChaincodeStubInterface, args []string)
 	}
 
 	key = args[0]                            //rename for fun
-	var coupon = Coupon{Number: args[1], Owner: args[2]}
+	var coupon = Coupon{Amount: args[1], Owner: args[2]}
 	couponAsBytes, _ := json.Marshal(coupon)
 	err = stub.PutState(key,couponAsBytes)  //write the variable into the chaincode state
 	if err != nil {
