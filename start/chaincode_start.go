@@ -66,7 +66,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
     return nil, errors.New("Received unknown function invocation: " + function)
 }
 func (t *SimpleChaincode) write(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
-	var key, amount,owner string
+	var key string
 	var err error
 	fmt.Println("running write()")
 
