@@ -20,7 +20,7 @@ import (
 	"errors"
 	"fmt"
          "encoding/json"
-	"strconv"//字符转换包
+	
 	
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 	
